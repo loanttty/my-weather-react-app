@@ -1,0 +1,167 @@
+.App .container {
+    color: palevioletred;
+    font-family: monospace;
+  }
+  .App .background-day {
+    background-image: linear-gradient(to bottom, #fdffcd, #ffebbb, #ffcab0);
+  }
+  .App .background-night {
+    background-image: linear-gradient(to bottom, #2c061f, #374045, #7d0633);
+  }
+  .App .big {
+    font-size: 56px;
+    margin: 0;
+    text-align: center;
+  }
+  .App #enter-city {
+    background-color: transparent;
+    border: 0.01em dotted palevioletred;
+    position: relative;
+    top: 0.4em;
+    left: 0.8em;
+    display: inline;
+    max-width: 200px;
+    margin-right: 10px;
+  }
+  
+  .App .celcius-big,
+  .App .search-button,
+  .App .search-current {
+    color: palevioletred;
+    font-size: 25px;
+    padding: 6px;
+    border: none;
+    width: 50px;
+    font-weight: 500;
+  }
+  .App .search-current {
+    position: relative;
+    right: 1.8em;
+    top: 0.1em;
+  }
+  
+  .App .farenheit-conversion {
+    position: relative;
+    bottom: 0.35em;
+    right: 0.3em;
+    color: palevioletred;
+    font-size: 25px;
+    padding: 6px;
+    border: none;
+    font-weight: 500;
+    background-color: transparent;
+  }
+  
+  .App .divider {
+    position: relative;
+    top: 0.6em;
+    left: 0.05em;
+    padding: 0;
+    color: palevioletred;
+    font-size: 25px;
+    border: none;
+    font-weight: 500;
+  }
+  .App #dropdown-menu {
+    min-width: 7rem;
+    background-color: transparent;
+    border: none;
+  }
+  .App #dropdown-item {
+    font-size: 14px;
+    color: palevioletred;
+  }
+  .App #dropdown-item:hover {
+    background-color: peachpuff;
+    color: brown;
+    font-weight: bolder;
+    border-radius: 20px;
+  }
+  .App .row-place {
+    font-size: 34px;
+    font-weight: bolder;
+    padding-top: 10px;
+  }
+  .App .row-date,
+  .App .row-info {
+    padding-bottom: 0;
+    font-size: 15px;
+  }
+  .App .row-desc,
+  .App .row-max-min {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .App .row-future-day,
+  .App .row-future-weather {
+    font-weight: 600;
+  }
+  .App .row-future-date {
+    font-size: 14px;
+  }
+  
+  .App .row-future-icon {
+    font-size: 22px;
+  }
+  .App #my-chart {
+    background-color: transparent;
+  }
+  
+  .App #dropdown {
+    position: relative;
+    right: 4em;
+    top: 0.2em;
+    background-color: transparent;
+    border: none;
+    color: transparent;
+    width: 56px;
+  }
+  
+  .App #heart1 {
+    font-size: 30px;
+    color: palevioletred;
+    position: relative;
+    top: 2px;
+  }
+  
+  .App #heart2 {
+    font-size: 20px;
+    position: relative;
+    bottom: 0.8em;
+    left: 0.2em;
+  }
+  
+  .App .farenheit-conversion:hover {
+    color: #f03861;
+    font-weight: bolder;
+  }
+  .App .search-button:hover,
+  .App .search-current:hover,
+  .App #dropdown:hover {
+    background-color: rgb(255, 192, 203, 0.5);
+  }
+  .App .celcius-big {
+    position: relative;
+    top: 0.3em;
+  }
+  
+  .App .btn {
+    background-color: transparent;
+  }
+  
+  .tooltip .tooltip-inner {
+    animation: ease-in-out;
+  }
+  
+  .App span {
+    width: fit-content;
+    padding: 0;
+  }
+  
+  .App .search-button {
+    position: relative;
+    left: 0.2em;
+    top: 0.1em;
+  }
+  
