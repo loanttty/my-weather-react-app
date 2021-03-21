@@ -2,6 +2,11 @@
     color: palevioletred;
     font-family: monospace;
   }
+
+  .App .card {
+    width: 30rem;
+    margin: 20px auto
+  }
   .App .background-day {
     background-image: linear-gradient(to bottom, #fdffcd, #ffebbb, #ffcab0);
   }

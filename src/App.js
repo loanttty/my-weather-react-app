@@ -1,6 +1,5 @@
 import './App.css';
-import "./Styles.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./Style.css";
 import { Card, Container, Row } from "react-bootstrap";
 import Chart from "./ChartHourlyForecast";
 import DailyForecast from "./DailyForecast";
@@ -12,7 +11,7 @@ export default function App() {
       <Container className="px-4">
         <Card
           className="background-night"
-          style={{ width: "30rem", marginTop: "20px" }}
+          style={{}}
         >
           <Card.Body>
             <Search />
@@ -104,7 +103,7 @@ export default function App() {
             <DailyForecast />
           </Card.Body>
         </Card>
-        <p>Open-sourced on <a>GitHub</a> by Tran Thanh Loan</p>
+        <p>Open-sourced on <a href="https://github.com/loanttty/my-weather-react-app">GitHub</a> by Tran Thanh Loan</p>
       </Container>
     </div>
   );
