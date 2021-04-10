@@ -1,8 +1,6 @@
 import './App.css';
 import "./Style.css";
 import { Card, Container} from "react-bootstrap";
-import Chart from "./ChartHourlyForecast";
-import DailyForecast from "./DailyForecast";
 import Search from "./SearchFunction";
 
 export default function App() {
@@ -15,8 +13,6 @@ export default function App() {
         >
           <Card.Body>
             <Search defaultCity="London" />
-            <Chart />
-            <DailyForecast />
           </Card.Body>
         </Card>
         <p>Open-sourced on <a href="https://github.com/loanttty/my-weather-react-app">GitHub</a> by Tran Thanh Loan</p>

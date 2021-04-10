@@ -3,8 +3,8 @@ import axios from 'axios';
 
 export default function SearchCurrentLocation(props) {
 	let [location,setLocation] = useState({
-    lon: null,
-    lat: null,
+    	lon: null,
+    	lat: null,
 		apiCall: false
   })
 
@@ -14,13 +14,13 @@ export default function SearchCurrentLocation(props) {
       setLocation({
         lat: response.coords.latitude,
         lon: response.coords.longitude,
-				apiCall: true
+		apiCall: true
       })
 		})
   }
 
 	useEffect(() => {
-		const key = "e799217a4276d0646d61cfe92b79802b";
+		const key = "9ec2a4429dcdbe4e388875969b764e7e";
 		if (location.apiCall) {
 			let url = `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${key}&units=${props.tempUnitIndicator}`;
 			axios.get(url).then((response) => {

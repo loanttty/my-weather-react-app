@@ -1,15 +1,33 @@
-import react from 'react';
+import react, { useState } from 'react';
 import { Row} from "react-bootstrap";
 import DisplayTimeAndDate from "./DisplayTimeAndDate";
 
 export default function CurrentWeather (props) {
-  const {currentWeather} = props
+	const {tempUnitIndicator,currentWeather} = props
+	let [unit,setUnit] = useState('C')
+	const favedCities = ['Kosice', 'San Jose', 'Paris']
+	let [faved,setFaved] = useState(false)
+
+	function checkFaved (city) {
+		const cityInList = favedCities.filter(favedCity => favedCity === city);
+		return cityInList.length > 0
+		
+	}
+	
+	function updateUnit () {
+		setUnit('F');
+		props.unitChange('imperial');
+	}
+	
+	function updateFavoriteCity () {
+		setFaved(oldState => ({faved: !oldState}))
+	}
 	return(
 		<div className='currentWeather' >
 				<Row className="row-place justify-content-center">
 					<span className="city">{currentWeather.cityName}</span>
 					<span style={{ width: "fit-content" }}>
-						<i className="far fa-heart" id="heart2" />
+						<i className={faved? "fas fa-heart" : "far fa-heart"} id="heart2" onClick={updateFavoriteCity}/>
 					</span>
 				</Row>
 				<Row className="row-date justify-content-center">
@@ -27,7 +45,7 @@ export default function CurrentWeather (props) {
 						className="celcius"
 						style={{ width: "fit-content", paddingRight: "5px" }}
 					>
-						°C
+						°{unit}
 					</span>{" "}
 					| WindSpeed:
 					<span
@@ -56,7 +74,7 @@ export default function CurrentWeather (props) {
 						{currentWeather.temp}
 					</span>
 					<span className="celcius-big" style={{ width: "fit-content" }}>
-						°C
+						°{unit}
 					</span>
 					<span className="divider" style={{ width: "fit-content" }}>
 						|
@@ -64,8 +82,9 @@ export default function CurrentWeather (props) {
 					<button
 						className="farenheit-conversion"
 						style={{ width: "fit-content" }}
+						onClick={updateUnit}
 					>
-						°F
+						°{tempUnitIndicator === 'metric' ? 'F' : 'C'}
 					</button>
 				</Row>
 				<Row className="row-desc justify-content-center">Clear</Row>

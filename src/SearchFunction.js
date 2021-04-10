@@ -4,13 +4,23 @@ import axios from 'axios';
 import CurrentWeather from "./CurrentWeather";
 import SearchCurrentLocation from './SearchCurrentLocation';
 import DailyForecast from "./DailyForecast";
+import ChartHourlyForecast from './ChartHourlyForecast'
 
 export default function Search(props) {
+  const favedCities = ['Kosice', 'San Jose', 'Paris']
+  
   let [city,setCity] = useState(props.defaultCity)
   let [tempUnitIndicator,setTempUnitIndicator] = useState('metric')
   let [currentWeather,setCurrentWeather] = useState({ready: false})
+	let [faved,setFaved] = useState(false)
+
+	function checkFaved (city) {
+		const cityInList = favedCities.filter(favedCity => favedCity === city);
+		return cityInList.length > 0
+	}
   
   function updateCurrentWeather (response) {
+      console.log(response)
 			setCurrentWeather({
 				ready: true,
 				cityName: response.data.name,
@@ -28,7 +38,7 @@ export default function Search(props) {
 			})
   }
   function searchAPI () {
-    const key = "e799217a4276d0646d61cfe92b79802b";
+    const key = "9ec2a4429dcdbe4e388875969b764e7e";
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&&units=${tempUnitIndicator}`;
     axios.get(url).then(updateCurrentWeather)
   }
@@ -39,7 +49,10 @@ export default function Search(props) {
     event.preventDefault();
     searchAPI();
   }
-  
+  function updateTempUnitIndicator (unit) {
+    setTempUnitIndicator(unit)
+  }
+  if(currentWeather.ready) {
     return (
       <div className="search">
       <Row className="row-search">
@@ -78,10 +91,13 @@ export default function Search(props) {
           </Dropdown>
         </Col>
       </Row>
-      {currentWeather.ready && <CurrentWeather currentWeather={currentWeather} />}
-      <Row md={5}>
-        {currentWeather.ready && <DailyForecast location={currentWeather.location} tempUnitIndicator={tempUnitIndicator}/>}
-      </Row>
+      <CurrentWeather unitChange={updateTempUnitIndicator} currentWeather={currentWeather} tempUnitIndicator={tempUnitIndicator}/>
+      <ChartHourlyForecast city={currentWeather.cityName} tempUnitIndicator={tempUnitIndicator} />
+      <DailyForecast timezone={currentWeather.timezone} location={currentWeather.location} tempUnitIndicator={tempUnitIndicator}/>
     </div>
     );
+  } else {
+    searchAPI();
+    return null
+  }
 }
