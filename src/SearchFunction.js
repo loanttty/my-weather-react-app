@@ -7,18 +7,12 @@ import DailyForecast from "./DailyForecast";
 import ChartHourlyForecast from './ChartHourlyForecast'
 
 export default function Search(props) {
-  const favedCities = ['Kosice', 'San Jose', 'Paris']
+  let [favedList, setFavedList] = useState(['Kosice', 'San Jose', 'Paris'])
   
   let [city,setCity] = useState(props.defaultCity)
   let [tempUnitIndicator,setTempUnitIndicator] = useState('metric')
   let [currentWeather,setCurrentWeather] = useState({ready: false})
-	let [faved,setFaved] = useState(false)
 
-	function checkFaved (city) {
-		const cityInList = favedCities.filter(favedCity => favedCity === city);
-		return cityInList.length > 0
-	}
-  
   function updateCurrentWeather (response) {
       console.log(response)
 			setCurrentWeather({
@@ -52,6 +46,18 @@ export default function Search(props) {
   function updateTempUnitIndicator (unit) {
     setTempUnitIndicator(unit)
   }
+  function updateNewFavedCityList(newList) {
+    setFavedList(newList)
+  }
+  function displayDropDownList () {
+    favedList.map( item => {
+      return (
+        <Dropdown.Item id={`${item}`} onClick={()=> {setCity(item)}} >
+                {item}
+              </Dropdown.Item>
+      )
+    })
+  }
   if(currentWeather.ready) {
     return (
       <div className="search">
@@ -78,20 +84,12 @@ export default function Search(props) {
               <i className="fas fa-heart" id="heart1" />
             </Dropdown.Toggle>
             <Dropdown.Menu id="dropdown-menu">
-              <Dropdown.Item id="dropdown-item" className="Kosice">
-                Kosice
-              </Dropdown.Item>
-              <Dropdown.Item id="dropdown-item" className="San-Jose">
-                San Jose
-              </Dropdown.Item>
-              <Dropdown.Item id="dropdown-item" className="Paris">
-                Paris
-              </Dropdown.Item>
+              {displayDropDownList}
             </Dropdown.Menu>
           </Dropdown>
         </Col>
       </Row>
-      <CurrentWeather unitChange={updateTempUnitIndicator} currentWeather={currentWeather} tempUnitIndicator={tempUnitIndicator}/>
+      <CurrentWeather favedCities={updateNewFavedCityList} unitChange={updateTempUnitIndicator} currentWeather={currentWeather} tempUnitIndicator={tempUnitIndicator}/>
       <ChartHourlyForecast city={currentWeather.cityName} tempUnitIndicator={tempUnitIndicator} />
       <DailyForecast timezone={currentWeather.timezone} location={currentWeather.location} tempUnitIndicator={tempUnitIndicator}/>
     </div>

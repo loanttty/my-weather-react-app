@@ -5,13 +5,11 @@ import DisplayTimeAndDate from "./DisplayTimeAndDate";
 export default function CurrentWeather (props) {
 	const {tempUnitIndicator,currentWeather} = props
 	let [unit,setUnit] = useState('C')
-	const favedCities = ['Kosice', 'San Jose', 'Paris']
-	let [faved,setFaved] = useState(false)
+	let [favedCities,setFavedCities] = useState(['Kosice', 'San Jose', 'Paris'])
 
 	function checkFaved (city) {
 		const cityInList = favedCities.filter(favedCity => favedCity === city);
 		return cityInList.length > 0
-		
 	}
 	
 	function updateUnit () {
@@ -20,14 +18,22 @@ export default function CurrentWeather (props) {
 	}
 	
 	function updateFavoriteCity () {
-		setFaved(oldState => ({faved: !oldState}))
+		let changingFavedCities = useRef(favedCities)
+		if (checkFaved(currentWeather.cityName)) {
+			let newList = changingFavedCities.current.filter(cityName => cityName !== currentWeather.cityName)
+			setFavedCities(newList)
+		} else {
+			let newList = changingFavedCities.current.push(currentWeather.cityName)
+			setFavedCities(newList)
+		}
+		props.favedCities(favedCities)
 	}
 	return(
 		<div className='currentWeather' >
 				<Row className="row-place justify-content-center">
 					<span className="city">{currentWeather.cityName}</span>
 					<span style={{ width: "fit-content" }}>
-						<i className={faved? "fas fa-heart" : "far fa-heart"} id="heart2" onClick={updateFavoriteCity}/>
+						<i className={checkFaved(currentWeather.cityName)? "fas fa-heart" : "far fa-heart"} id="heart2" onClick={updateFavoriteCity}/>
 					</span>
 				</Row>
 				<Row className="row-date justify-content-center">
