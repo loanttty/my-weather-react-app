@@ -25,11 +25,9 @@ export default function SearchCurrentLocation(props) {
 			let url = `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${key}&units=${props.tempUnitIndicator}`;
 			axios.get(url).then((response) => {
 				props.updateCurrentWeather(response);
-				console.log(response);
 			})
 			setLocation({apiCall: false})
 		}
-		console.log(location);
 	})
 	
 	return (

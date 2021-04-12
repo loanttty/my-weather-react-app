@@ -3,8 +3,8 @@ import { Row} from "react-bootstrap";
 import DisplayTimeAndDate from "./DisplayTimeAndDate";
 
 export default function CurrentWeather (props) {
-	const {tempUnitIndicator,currentWeather} = props
-	let [unit,setUnit] = useState('C')
+	const {currentWeather} = props
+	let [unit,setUnit] = useState(true)
 	let [favedCities,setFavedCities] = useState(['Kosice', 'San Jose', 'Paris'])
 
 	function checkFaved (city) {
@@ -13,27 +13,31 @@ export default function CurrentWeather (props) {
 	}
 	
 	function updateUnit () {
-		setUnit('F');
-		props.unitChange('imperial');
+		const newUnit = !unit
+		setUnit(newUnit);
+		newUnit ? props.unitChange('metric') : props.unitChange('imperial');
 	}
 	
 	function updateFavoriteCity () {
-		let changingFavedCities = useRef(favedCities)
 		if (checkFaved(currentWeather.cityName)) {
-			let newList = changingFavedCities.current.filter(cityName => cityName !== currentWeather.cityName)
+			let newList = favedCities.filter(cityName => cityName !== currentWeather.cityName);
+			props.favedCities(newList)
 			setFavedCities(newList)
 		} else {
-			let newList = changingFavedCities.current.push(currentWeather.cityName)
+			let newCity = currentWeather.cityName;
+			let newList = [...favedCities,newCity];
+			props.favedCities(newList)
 			setFavedCities(newList)
 		}
-		props.favedCities(favedCities)
 	}
 	return(
 		<div className='currentWeather' >
 				<Row className="row-place justify-content-center">
 					<span className="city">{currentWeather.cityName}</span>
 					<span style={{ width: "fit-content" }}>
-						<i className={checkFaved(currentWeather.cityName)? "fas fa-heart" : "far fa-heart"} id="heart2" onClick={updateFavoriteCity}/>
+						<i className={checkFaved(currentWeather.cityName)? "fas fa-heart" : "far fa-heart"} 
+						id="heart2" 
+						onClick={updateFavoriteCity}/>
 					</span>
 				</Row>
 				<Row className="row-date justify-content-center">
@@ -51,7 +55,7 @@ export default function CurrentWeather (props) {
 						className="celcius"
 						style={{ width: "fit-content", paddingRight: "5px" }}
 					>
-						°{unit}
+						°{unit ? 'C' : 'F'}
 					</span>{" "}
 					| WindSpeed:
 					<span
@@ -80,7 +84,7 @@ export default function CurrentWeather (props) {
 						{currentWeather.temp}
 					</span>
 					<span className="celcius-big" style={{ width: "fit-content" }}>
-						°{unit}
+						°{unit ? 'C' : 'F'}
 					</span>
 					<span className="divider" style={{ width: "fit-content" }}>
 						|
@@ -90,7 +94,7 @@ export default function CurrentWeather (props) {
 						style={{ width: "fit-content" }}
 						onClick={updateUnit}
 					>
-						°{tempUnitIndicator === 'metric' ? 'F' : 'C'}
+						°{unit ? 'F' : 'C'}
 					</button>
 				</Row>
 				<Row className="row-desc justify-content-center">Clear</Row>
@@ -102,7 +106,7 @@ export default function CurrentWeather (props) {
 						{currentWeather.currentMax}
 					</span>
 					<span className="celcius" style={{ width: "fit-content" }}>
-						°C
+						°{unit ? 'C' : 'F'}
 					</span>
 					/
 					<span
@@ -112,7 +116,7 @@ export default function CurrentWeather (props) {
 						{currentWeather.currentMin}
 					</span>
 					<span className="celcius" style={{ width: "fit-content" }}>
-						°C
+						°{unit ? 'C' : 'F'}
 					</span>
 				</Row>
 		</div>

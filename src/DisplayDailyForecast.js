@@ -29,10 +29,10 @@ export default function DisplayDailyForecast(props) {
 					<img src = {`https://openweathermap.org/img/wn/${icon}@2x.png`} />
 				</Row>
 				<Row className="row-future-weather justify-content-center">
-					<span class="number forecast">{tempMax}</span>
-					<span class="noCelcius">°</span>/
-					<span class="number forecast">{tempMin}</span>
-					<span class="noCelcius">°</span>
+					<span className="number forecast">{tempMax}</span>
+					<span className="noCelcius">°</span>/
+					<span className="number forecast">{tempMin}</span>
+					<span className="noCelcius">°</span>
 				</Row>
 			</Col>
 	)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 
@@ -7,51 +7,38 @@ export default function ChartHourlyForecast(props) {
   let [labels,setLabels] = useState([]);
   let [hourlyTemp,setHourlyTemp] = useState([]);
   let [loaded, setLoaded] = useState(false);
-
-  const changingHourlyTemp = useRef(hourlyTemp);
-  const changingLabels = useRef(labels);
   
   function apiCall () {
-    changingHourlyTemp.current.splice(0,8);
-    changingLabels.current.splice(0,8);
-    console.log(changingLabels.current);
-    console.log(changingHourlyTemp.current);
-
     const key = "9ec2a4429dcdbe4e388875969b764e7e";
     let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}&cnt=40&units=${tempUnitIndicator}`;
     axios.get(forecastUrl).then((response) => {
-      console.log(response);
-      let i;
-      for (i = 0; i < 8; i++) {
-        changingHourlyTemp.current.push(Math.round(response.data.list[i].main.temp))
-      };
-      setHourlyTemp(changingHourlyTemp);
-      
-      for (i = 0; i < 8; i++) {
-      /**
-       * *Convert epoch according to current time of searched place and push to labels of xAxis
-       */
-      const d = new Date (response.data.list[i].dt*1000);
-      const localTime = d.getTime();
-      const localOffset = d.getTimezoneOffset() * 60000;
-      const utc = localTime + localOffset;
-      const timeConverted = utc + response.data.city.timezone * 1000; //convert a UNIX timestamp to JS
-      const localDate = new Date(timeConverted);
-      const hour = localDate.getHours();
-      
-      changingLabels.current.push(`${hour}:00`)
+      let changingHourlyTemp = [];
+      let changingLabels = [];
+
+      for (let i = 0; i < 8; i++) {
+        changingHourlyTemp.push(Math.round(response.data.list[i].main.temp))
+        /**
+         * *Convert epoch according to current time of searched place and push to labels of xAxis
+         */
+        const d = new Date (response.data.list[i].dt*1000);
+        const localTime = d.getTime();
+        const localOffset = d.getTimezoneOffset() * 60000;
+        const utc = localTime + localOffset;
+        const timeConverted = utc + response.data.city.timezone * 1000; //convert a UNIX timestamp to JS
+        const localDate = new Date(timeConverted);
+        const hour = localDate.getHours();
+        
+        changingLabels.push(`${hour}:00`)
       }
+      setHourlyTemp(changingHourlyTemp);
       setLabels(changingLabels)
       setLoaded(true)
-      console.log(hourlyTemp)
-      console.log(labels)
-    }
-    );
+    });
   };
   
   useEffect(() => {
     setLoaded(false)
-  },[city])
+  },[city,tempUnitIndicator])
 
   if(loaded) {
     return (

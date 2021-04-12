@@ -5,6 +5,7 @@ import CurrentWeather from "./CurrentWeather";
 import SearchCurrentLocation from './SearchCurrentLocation';
 import DailyForecast from "./DailyForecast";
 import ChartHourlyForecast from './ChartHourlyForecast'
+import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
 export default function Search(props) {
   let [favedList, setFavedList] = useState(['Kosice', 'San Jose', 'Paris'])
@@ -14,7 +15,6 @@ export default function Search(props) {
   let [currentWeather,setCurrentWeather] = useState({ready: false})
 
   function updateCurrentWeather (response) {
-      console.log(response)
 			setCurrentWeather({
 				ready: true,
 				cityName: response.data.name,
@@ -31,9 +31,9 @@ export default function Search(props) {
         location:response.data.coord,
 			})
   }
-  function searchAPI () {
+  function searchAPI (city,tempUnit) {
     const key = "9ec2a4429dcdbe4e388875969b764e7e";
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&&units=${tempUnitIndicator}`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&&units=${tempUnit}`;
     axios.get(url).then(updateCurrentWeather)
   }
   function updateCity (event) {
@@ -41,22 +41,25 @@ export default function Search(props) {
   }
   function handleCityEntered (event) {
     event.preventDefault();
-    searchAPI();
+    searchAPI(city,tempUnitIndicator);
   }
   function updateTempUnitIndicator (unit) {
-    setTempUnitIndicator(unit)
+    setTempUnitIndicator(unit);
+    searchAPI(currentWeather.cityName,unit); // use currentWeather.cityName instead of city state to enable unit conversion when the city was updated by SearchCurrentFunction
   }
   function updateNewFavedCityList(newList) {
     setFavedList(newList)
+    console.log(newList)
   }
   function displayDropDownList () {
-    favedList.map( item => {
-      return (
-        <Dropdown.Item id={`${item}`} onClick={()=> {setCity(item)}} >
-                {item}
-              </Dropdown.Item>
-      )
-    })
+    console.log(favedList)
+    favedList.map( item => 
+      (
+        <Dropdown.Item key={`${item}`} onClick={()=> {setCity(item)}} >
+        {item}
+      </Dropdown.Item>
+    )
+    )
   }
   if(currentWeather.ready) {
     return (
@@ -84,7 +87,7 @@ export default function Search(props) {
               <i className="fas fa-heart" id="heart1" />
             </Dropdown.Toggle>
             <Dropdown.Menu id="dropdown-menu">
-              {displayDropDownList}
+              {displayDropDownList()}
             </Dropdown.Menu>
           </Dropdown>
         </Col>
@@ -95,7 +98,7 @@ export default function Search(props) {
     </div>
     );
   } else {
-    searchAPI();
+    searchAPI(city,tempUnitIndicator);
     return null
   }
 }
