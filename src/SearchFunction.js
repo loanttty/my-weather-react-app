@@ -5,7 +5,6 @@ import CurrentWeather from "./CurrentWeather";
 import SearchCurrentLocation from './SearchCurrentLocation';
 import DailyForecast from "./DailyForecast";
 import ChartHourlyForecast from './ChartHourlyForecast'
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
 export default function Search(props) {
   let [favedList, setFavedList] = useState(['Kosice', 'San Jose', 'Paris'])
@@ -49,17 +48,17 @@ export default function Search(props) {
   }
   function updateNewFavedCityList(newList) {
     setFavedList(newList)
-    console.log(newList)
   }
   function displayDropDownList () {
-    console.log(favedList)
-    favedList.map( item => 
-      (
-        <Dropdown.Item key={`${item}`} onClick={()=> {setCity(item)}} >
+    return favedList.map( item => (
+        <Dropdown.Item 
+          key={`${item}`} id='dropdown-item' 
+          onClick={()=> {
+            setCity(item);
+            searchAPI(item,tempUnitIndicator)}} >
         {item}
-      </Dropdown.Item>
-    )
-    )
+        </Dropdown.Item>
+    ))
   }
   if(currentWeather.ready) {
     return (

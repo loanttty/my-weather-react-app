@@ -6,7 +6,7 @@ export default function CurrentWeather (props) {
 	const {currentWeather} = props
 	let [unit,setUnit] = useState(true)
 	let [favedCities,setFavedCities] = useState(['Kosice', 'San Jose', 'Paris'])
-
+	
 	function checkFaved (city) {
 		const cityInList = favedCities.filter(favedCity => favedCity === city);
 		return cityInList.length > 0
