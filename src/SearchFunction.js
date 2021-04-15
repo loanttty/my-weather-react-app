@@ -8,7 +8,6 @@ import ChartHourlyForecast from './ChartHourlyForecast'
 
 export default function Search(props) {
   let [favedList, setFavedList] = useState(['Kosice', 'San Jose', 'Paris'])
-  
   let [city,setCity] = useState(props.defaultCity)
   let [tempUnitIndicator,setTempUnitIndicator] = useState('metric')
   let [currentWeather,setCurrentWeather] = useState({ready: false})
@@ -29,6 +28,11 @@ export default function Search(props) {
 				timezone: response.data.timezone,
         location:response.data.coord,
 			})
+      props.onChangeBackground({
+        dt: response.data.dt,
+        sunrise: response.data.sys.sunrise,
+        sunset: response.data.sys.sunset
+      })
   }
   function searchAPI (city,tempUnit) {
     const key = "9ec2a4429dcdbe4e388875969b764e7e";

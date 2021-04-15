@@ -1,4 +1,4 @@
-import react, { useState } from 'react';
+import { useState } from 'react';
 import { Row} from "react-bootstrap";
 import DisplayTimeAndDate from "./DisplayTimeAndDate";
 
@@ -90,7 +90,7 @@ export default function CurrentWeather (props) {
 						|
 					</span>
 					<button
-						className="farenheit-conversion"
+						className="btn farenheit-conversion"
 						style={{ width: "fit-content" }}
 						onClick={updateUnit}
 					>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export default function ChartHourlyForecast(props) {
   const {city,tempUnitIndicator} = props;
@@ -72,7 +73,8 @@ export default function ChartHourlyForecast(props) {
             borderWidth: 1,
           }]
         }}
-        option={{
+        plugins={[ChartDataLabels]}
+        options={{
           legend: {
             display: false,
           },
@@ -92,7 +94,7 @@ export default function ChartHourlyForecast(props) {
               },
               ticks: {
                 display: false,
-                max: 120
+                max: tempUnitIndicator === 'metric' ? 50 : 120, 
               }
             }],
           },

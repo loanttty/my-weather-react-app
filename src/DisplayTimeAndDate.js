@@ -1,4 +1,3 @@
-import react from 'react';
 
 export default function CurrentWeather (props) {
 	const {dt, timezone} = props;

@@ -26,7 +26,7 @@ export default function DisplayDailyForecast(props) {
 				<Row className="row-future-day justify-content-center">{day}</Row>
 				<Row className="row-future-date justify-content-center">{date < 10 ? `0${date}`: `${date}`}/{month <10 ? `0${month}`: `${month}`}</Row>
 				<Row className="row-future-icon justify-content-center">
-					<img src = {`https://openweathermap.org/img/wn/${icon}@2x.png`} />
+					<img src = {`https://openweathermap.org/img/wn/${icon}@2x.png`} alt="weather-icon"/>
 				</Row>
 				<Row className="row-future-weather justify-content-center">
 					<span className="number forecast">{tempMax}</span>
