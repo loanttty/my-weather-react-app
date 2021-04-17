@@ -1,4 +1,4 @@
-#Weather App coded in React
+# Weather App coded in React
 
 This app has some highlighted functions below:
 * Display current weather and time of searched location
